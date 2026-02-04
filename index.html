@@ -31,7 +31,7 @@
         a, a:visited { color: inherit; text-decoration: none; }
         a:hover, a:focus { color: var(--accent); text-decoration: none; }
 
-        header { background: var(--white); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06); position: sticky; top: 0; z-index: 50; }
+        header { background: var(--white); box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06); position: sticky; top: 0; z-index: 100; }
         .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
         nav ul { list-style: none; display: flex; gap: 1.4rem; }
@@ -101,12 +101,30 @@
         }
 
         .order-section { background: var(--gray-50); }
-        .order-layout { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .order-box { background: var(--white); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); border: 1px solid var(--gray-100); }
+        .order-layout { 
+            display: grid; 
+            gap: 2rem; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            align-items: start; /* Empêche l'étirement vertical des colonnes */
+        }
+        .order-box { 
+            background: var(--white); 
+            border-radius: var(--radius); 
+            padding: 2rem; 
+            box-shadow: var(--shadow); 
+            border: 1px solid var(--gray-100); 
+        }
+        
+        /* Correction spécifique pour le bloc engagements sur PC */
+        .order-box.sticky-box {
+            position: sticky;
+            top: 100px; /* Colle au haut lors du scroll */
+        }
+
         .order-box h3 { margin-bottom: 1.2rem; }
         .order-box ul { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; color: var(--gray-600); }
         .order-box li { display: flex; gap: 0.8rem; }
-        .order-box li i { color: #22a06b; margin-top: 0.2rem; }
+        .order-box li i { color: #22a06b; margin-top: 0.2rem; flex-shrink: 0; }
         form .group { margin-bottom: 1.1rem; }
         label { font-weight: 600; display: block; margin-bottom: 0.35rem; }
         input, textarea {
@@ -260,6 +278,7 @@
             .stepper { grid-template-columns: 1fr; }
             .step-list { flex-direction: row; overflow-x: auto; }
             .step-btn { flex: 1 0 220px; white-space: nowrap; }
+            .order-box.sticky-box { position: relative; top: 0; }
         }
         @media (max-width: 768px) {
             nav ul { display: none; }
@@ -274,9 +293,9 @@
         <div class="wrapper">
             <div class="header-inner">
                 <div class="logo" style="display:flex;align-items:center;gap:0.8rem;">
-    <div style="background:var(--accent);color:white;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">
-        <img src="https://i.ibb.co/NkMjFMF/logo-asoual.png" alt="Logo Asoual" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">
-    </div>
+                    <div style="background:var(--accent);color:white;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">
+                        <img src="https://i.ibb.co/NkMjFMF/logo-asoual.png" alt="Logo Asoual" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">
+                    </div>
                     <div>
                         <strong style="font-size:1.2rem;">Cold Atlas</strong><br />
                         <small style="color:var(--gray-600);">Chambres froides & équipements</small>
@@ -402,7 +421,8 @@
                 <p>Précisez votre projet de chambre froide, nous dimensionnons les équipements adaptés à vos puissances frigorifiques.</p>
             </div>
             <div class="order-layout">
-                <aside class="order-box reveal">
+                <!-- Bloc corrigé : ajout de sticky-box et align-self géré par order-layout -->
+                <aside class="order-box sticky-box reveal">
                     <h3>Nos engagements</h3>
                     <ul>
                         <li><i class="fas fa-thermometer-half"></i><span>Respect strict de la chaîne du froid et des normes HACCP</span></li>
@@ -441,7 +461,7 @@
                         </div>
 
                         <h3>Équipements souhaités</h3>
-                        <div class="product-line reveal">
+                        <div class="product-line">
                             <span>Chambres froides modulaires</span>
                             <div class="qty-controls">
                                 <button type="button" class="qty-btn" data-product="chambres" data-action="minus">−</button>
@@ -449,7 +469,7 @@
                                 <button type="button" class="qty-btn" data-product="chambres" data-action="plus">+</button>
                             </div>
                         </div>
-                        <div class="product-line reveal">
+                        <div class="product-line">
                             <span>Compresseurs (toutes puissances)</span>
                             <div class="qty-controls">
                                 <button type="button" class="qty-btn" data-product="compresseurs" data-action="minus">−</button>
@@ -457,7 +477,7 @@
                                 <button type="button" class="qty-btn" data-product="compresseurs" data-action="plus">+</button>
                             </div>
                         </div>
-                        <div class="product-line reveal">
+                        <div class="product-line">
                             <span>Évaporateurs</span>
                             <div class="qty-controls">
                                 <button type="button" class="qty-btn" data-product="evaporateurs" data-action="minus">−</button>
@@ -465,7 +485,7 @@
                                 <button type="button" class="qty-btn" data-product="evaporateurs" data-action="plus">+</button>
                             </div>
                         </div>
-                        <div class="product-line reveal">
+                        <div class="product-line">
                             <span>Panneaux sandwich</span>
                             <div class="qty-controls">
                                 <button type="button" class="qty-btn" data-product="panneaux" data-action="minus">−</button>
@@ -473,7 +493,7 @@
                                 <button type="button" class="qty-btn" data-product="panneaux" data-action="plus">+</button>
                             </div>
                         </div>
-                        <div class="product-line reveal">
+                        <div class="product-line">
                             <span>Portes de chambre froide</span>
                             <div class="qty-controls">
                                 <button type="button" class="qty-btn" data-product="portes" data-action="minus">−</button>
@@ -481,7 +501,7 @@
                                 <button type="button" class="qty-btn" data-product="portes" data-action="plus">+</button>
                             </div>
                         </div>
-                        <div class="product-line reveal">
+                        <div class="product-line">
                             <span>Armoires électriques</span>
                             <div class="qty-controls">
                                 <button type="button" class="qty-btn" data-product="armoires" data-action="minus">−</button>
@@ -492,10 +512,10 @@
 
                         <div class="group">
                             <label for="commentaire">Précisions complémentaires</label>
-                            <textarea id="commentaire" name="commentaire" placeholder="Ex : plage de température, surface, puissance souhaitée, fluides préférés…"></textarea>
+                            <textarea id="commentaire" name="commentaire" placeholder="Ex : plage de température, surface, puissance souhaitée..."></textarea>
                         </div>
 
-                        <div class="counter reveal">
+                        <div class="counter">
                             <small>Total d’équipements sélectionnés</small>
                             <span id="totalArticles">0</span>
                         </div>
@@ -503,9 +523,6 @@
                         <button type="submit" class="btn" style="width:100%; margin-top:1.5rem;">
                             <i class="fas fa-paper-plane"></i> Envoyer la demande
                         </button>
-                        <p style="font-size:0.85rem;color:var(--gray-600);margin-top:0.8rem;text-align:center;">
-                            En validant, vous acceptez nos conditions générales de vente.
-                        </p>
                     </form>
                 </div>
             </div>
@@ -539,33 +556,6 @@
         </div>
     </section>
 
-    <section id="apropos">
-        <div class="wrapper">
-            <div class="section-title reveal">
-                <h2>À Propos De Cold Atlas</h2>
-                <p>Une expertise multi-sectorielle pour garantir la chaîne du froid en toute circonstance.</p>
-            </div>
-            <div class="grid">
-                <article class="card reveal">
-                    <h3>18 ans d’expérience</h3>
-                    <p>Agroalimentaire, santé, grande distribution et laboratoires de recherche.</p>
-                </article>
-                <article class="card reveal">
-                    <h3>Bureau d’études intégré</h3>
-                    <p>Calculs thermiques, notes de dimensionnement, DOE et formations opérateurs.</p>
-                </article>
-                <article class="card reveal">
-                    <h3>Technologie connectée</h3>
-                    <p>Monitoring cloud, alertes SMS et rapports d’analyse énergétique automatisés.</p>
-                </article>
-                <article class="card reveal">
-                    <h3>Présence nationale</h3>
-                    <p>Équipes mobiles sur tout le territoire et partenaires certifiés à l’export.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
     <section id="contact">
         <div class="wrapper">
             <div class="section-title reveal">
@@ -573,13 +563,13 @@
                 <p>Un conseiller froid industriel vous répond du lundi au vendredi.</p>
             </div>
             <div class="contact-grid">
-                <a class="contact-card reveal" href="tel:0796096433" target="_blank" aria-label="Appeler Cold Atlas">
+                <a class="contact-card reveal" href="tel:0796096433" target="_blank">
                     <div class="card-icon"><i class="fas fa-phone"></i></div>
                     <h3>Téléphone</h3>
                     <p style="font-size:1.2rem;font-weight:700;">0796096433</p>
                     <small>8h30 – 12h30 / 14h00 – 18h30</small>
                 </a>
-                <a class="contact-card reveal" href="mailto:malekstructure@gmail.com" target="_blank" aria-label="Envoyer un email à Cold Atlas">
+                <a class="contact-card reveal" href="mailto:malekstructure@gmail.com" target="_blank">
                     <div class="card-icon"><i class="fas fa-envelope"></i></div>
                     <h3>Email</h3>
                     <p style="font-size:1.05rem;font-weight:700;">malekstructure@gmail.com</p>
@@ -608,15 +598,13 @@
                     <a href="#solutions">Solutions</a><br />
                     <a href="#installations">Installations</a><br />
                     <a href="#devis">Devis</a><br />
-                    <a href="#apres-devis">Processus</a><br />
                     <a href="#contact">Contact</a>
                 </div>
                 <div class="reveal">
                     <h4>Documents</h4>
                     <a href="#">Mentions légales</a><br />
                     <a href="#">Politique de confidentialité</a><br />
-                    <a href="#">CGV</a><br />
-                    <a href="#">Support technique</a>
+                    <a href="#">CGV</a>
                 </div>
             </div>
             <p style="text-align:center;margin-top:2rem;color:var(--gray-400);">© 2026 Cold Atlas – Tous droits réservés.</p>
@@ -626,6 +614,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Navigation mobile
             const burger = document.getElementById("burgerButton");
             const drawer = document.getElementById("mobileDrawer");
             burger.addEventListener("click", () => {
@@ -634,21 +623,9 @@
                     ? '<i class="fas fa-times"></i>'
                     : '<i class="fas fa-bars"></i>';
             });
-            drawer.querySelectorAll("a").forEach(link => {
-                link.addEventListener("click", () => {
-                    drawer.classList.remove("open");
-                    burger.innerHTML = '<i class="fas fa-bars"></i>';
-                });
-            });
 
-            const quantities = {
-                chambres: 0,
-                compresseurs: 0,
-                evaporateurs: 0,
-                panneaux: 0,
-                portes: 0,
-                armoires: 0
-            };
+            // Gestion des quantités
+            const quantities = { chambres: 0, compresseurs: 0, evaporateurs: 0, panneaux: 0, portes: 0, armoires: 0 };
             const totalEl = document.getElementById("totalArticles");
 
             const updateTotals = () => {
@@ -660,108 +637,55 @@
             document.querySelectorAll(".qty-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const product = btn.dataset.product;
-                    if (btn.dataset.action === "plus") {
-                        quantities[product]++;
-                    } else if (quantities[product] > 0) {
-                        quantities[product]--;
-                    }
+                    if (btn.dataset.action === "plus") quantities[product]++;
+                    else if (quantities[product] > 0) quantities[product]--;
                     document.getElementById(`qty-${product}`).textContent = quantities[product];
                     updateTotals();
                 });
             });
 
+            // Formulaire
             document.getElementById("commandeForm").addEventListener("submit", e => {
                 e.preventDefault();
                 if (updateTotals() === 0) {
-                    alert("Merci de sélectionner au moins un équipement avant d’envoyer la demande.");
+                    alert("Merci de sélectionner au moins un équipement.");
                     return;
                 }
-                const formData = Object.fromEntries(new FormData(e.target).entries());
-                alert(`Merci ${formData.nom} ! Votre demande a bien été transmise. Nous revenons vers vous rapidement avec un dimensionnement personnalisé.`);
+                alert("Merci ! Votre demande a été transmise.");
                 e.target.reset();
-                Object.keys(quantities).forEach(key => {
-                    quantities[key] = 0;
-                    document.getElementById(`qty-${key}`).textContent = "0";
-                });
-                updateTotals();
             });
 
+            // Stepper
             const stepsData = [
-                {
-                    title: "Audit & relevés thermiques",
-                    desc: "Mesures hygrométriques, étude des flux, scénarios de charge simultanée et contraintes électriques pour bâtir un dossier complet.",
-                    bullets: [
-                        "Cartographie 3D des volumes et capteurs.",
-                        "Analyse des produits stockés et cycles de chargement.",
-                        "Rapport de conformité pré-projet."
-                    ]
-                },
-                {
-                    title: "Ingénierie & dimensionnement",
-                    desc: "Simulation des charges, sélection des compresseurs/évaporateurs, calcul des panneaux et rédaction des schémas électriques.",
-                    bullets: [
-                        "Bilans thermiques détaillés.",
-                        "Choix des fluides frigorigènes.",
-                        "Dossier d’exécution validé par le bureau d’études."
-                    ]
-                },
-                {
-                    title: "Montage & raccordements",
-                    desc: "Assemblage des panneaux sandwich, pose des portes, tirage des câbles et raccordement frigorifique sous contrôle F-Gaz.",
-                    bullets: [
-                        "Planification des équipes chantier.",
-                        "Tests d’étanchéité et mise sous pression.",
-                        "Contrôle qualité en fin d’étape."
-                    ]
-                },
-                {
-                    title: "Mise en service & supervision",
-                    desc: "Paramétrage des automates, essais de charge, formation des équipes et activation de la télésurveillance SCADA.",
-                    bullets: [
-                        "Stabilisation des consignes.",
-                        "Paramètres d’alarme personnalisés.",
-                        "Suivi énergétique et rapport de réception."
-                    ]
-                }
+                { title: "Audit & relevés thermiques", desc: "Mesures hygrométriques, étude des flux et contraintes électriques.", bullets: ["Cartographie 3D", "Analyse des cycles", "Rapport de conformité"] },
+                { title: "Ingénierie & dimensionnement", desc: "Simulation des charges et sélection précise des composants.", bullets: ["Bilans thermiques", "Choix des fluides", "Dossier d'exécution"] },
+                { title: "Montage & raccordements", desc: "Assemblage des panneaux et pose des équipements frigorifiques.", bullets: ["Techniciens F-Gaz", "Tests d'étanchéité", "Contrôle qualité"] },
+                { title: "Mise en service & supervision", desc: "Paramétrage final et formation de vos équipes opérationnelles.", bullets: ["Essais de charge", "Télésurveillance", "Remise du DOE"] }
             ];
-            const stepButtons = document.querySelectorAll(".step-btn");
-            const stepTitle = document.getElementById("stepTitle");
-            const stepDescription = document.getElementById("stepDescription");
-            const stepBullets = document.getElementById("stepBullets");
-            const progressBar = document.getElementById("progressBar");
 
+            const stepButtons = document.querySelectorAll(".step-btn");
             const renderStep = index => {
                 const step = stepsData[index];
-                if (!step) return;
-                stepTitle.textContent = step.title;
-                stepDescription.textContent = step.desc;
-                stepBullets.innerHTML = step.bullets.map(item => `<li>${item}</li>`).join("");
-                progressBar.style.width = `${((index + 1) / stepsData.length) * 100}%`;
-                stepButtons.forEach(btn => btn.classList.remove("active"));
-                stepButtons[index].classList.add("active");
+                document.getElementById("stepTitle").textContent = step.title;
+                document.getElementById("stepDescription").textContent = step.desc;
+                document.getElementById("stepBullets").innerHTML = step.bullets.map(b => `<li>${b}</li>`).join("");
+                document.getElementById("progressBar").style.width = `${((index + 1) / 4) * 100}%`;
+                stepButtons.forEach((b, i) => b.classList.toggle("active", i === index));
             };
 
-            stepButtons.forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const idx = parseInt(btn.dataset.step, 10);
-                    renderStep(idx);
-                });
-            });
-
+            stepButtons.forEach(btn => btn.addEventListener("click", () => renderStep(parseInt(btn.dataset.step))));
             renderStep(0);
 
-            const revealElements = document.querySelectorAll(".reveal");
+            // Animations Reveal
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("visible");
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.2 });
-            revealElements.forEach(el => observer.observe(el));
+            }, { threshold: 0.1 });
+            document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
         });
-        
     </script>
 </body>
 </html>
